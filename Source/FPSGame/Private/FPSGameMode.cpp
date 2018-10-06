@@ -1,9 +1,9 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
-
 #include "FPSGameMode.h"
 #include "FPSHUD.h"
 #include "FPSCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 AFPSGameMode::AFPSGameMode()
 {
@@ -13,4 +13,32 @@ AFPSGameMode::AFPSGameMode()
 
 	// use our custom HUD class
 	HUDClass = AFPSHUD::StaticClass();
+}
+
+void AFPSGameMode::CompleteMission(APawn* InstigatorPawn)
+{
+	if (InstigatorPawn) {
+		InstigatorPawn->DisableInput(nullptr);
+	}
+
+	if (SpectatingViewpointClass) {
+		TArray<AActor*> ReturnedActors;
+		UGameplayStatics::GetAllActorsOfClass(this, SpectatingViewpointClass, ReturnedActors);
+
+		AActor* NewViewTarget = nullptr;
+		if (ReturnedActors.Num() > 0) {
+			NewViewTarget = ReturnedActors[0];
+
+			APlayerController* PC = Cast<APlayerController>(InstigatorPawn->GetController());
+			if (PC) {
+				PC->SetViewTargetWithBlend(NewViewTarget, 3.0f, EViewTargetBlendFunction::VTBlend_Cubic);
+			}
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("SpectatingViewpoint class is missing. Update GameMode class."));
+		}
+	}
+
+	OnMissionCompleted(InstigatorPawn);
+
 }
