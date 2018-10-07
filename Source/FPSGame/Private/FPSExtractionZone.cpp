@@ -5,7 +5,6 @@
 #include "FPSGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
-
 // Sets default values
 AFPSExtractionZone::AFPSExtractionZone()
 {
@@ -42,7 +41,7 @@ void AFPSExtractionZone::HandleOverlap(
 	if (MyPawn->bIsCarryingObjective) {
 		AFPSGameMode* GM = Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM) {
-			GM->CompleteMission(MyPawn);
+			GM->CompleteMission(MyPawn, true);
 			UGameplayStatics::PlaySound2D(this, CompleteMissionSound);
 		}
 	}
