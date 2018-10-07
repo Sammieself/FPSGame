@@ -19,19 +19,18 @@ void AFPSGameMode::CompleteMission(APawn* InstigatorPawn)
 {
 	if (InstigatorPawn) {
 		InstigatorPawn->DisableInput(nullptr);
-	}
 
-	if (SpectatingViewpointClass) {
-		TArray<AActor*> ReturnedActors;
-		UGameplayStatics::GetAllActorsOfClass(this, SpectatingViewpointClass, ReturnedActors);
+		if (SpectatingViewpointClass) {
+			TArray<AActor*> ReturnedActors;
+			UGameplayStatics::GetAllActorsOfClass(this, SpectatingViewpointClass, ReturnedActors);
 
-		AActor* NewViewTarget = nullptr;
-		if (ReturnedActors.Num() > 0) {
-			NewViewTarget = ReturnedActors[0];
+			if (ReturnedActors.Num() > 0) {
+				AActor* NewViewTarget = ReturnedActors[0];
 
-			APlayerController* PC = Cast<APlayerController>(InstigatorPawn->GetController());
-			if (PC) {
-				PC->SetViewTargetWithBlend(NewViewTarget, 3.0f, EViewTargetBlendFunction::VTBlend_Cubic);
+				APlayerController* PC = Cast<APlayerController>(InstigatorPawn->GetController());
+				if (PC) {
+					PC->SetViewTargetWithBlend(NewViewTarget, 3.0f, EViewTargetBlendFunction::VTBlend_Cubic);
+				}
 			}
 		}
 		else {
