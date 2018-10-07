@@ -5,6 +5,7 @@
 #include "FPSGameMode.h"
 #include "Net/UnrealNetwork.h"
 #include "NavigationSystem.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "TimerManager.h"
 
 
@@ -93,7 +94,6 @@ void AFPSAIGuard::ResetOrientation()
 	}
 
 	SetActorRotation(OriginalRotation);
-
 	SetGuardState(EAIState::Idle);
 
 	// Stopped investigating...if we are a patrolling pawn, pick a new patrol point to move to
@@ -130,7 +130,7 @@ void AFPSAIGuard::Tick(float DeltaTime)
 		float DistanceToGoal = Delta.Size();
 
 		// Check if we are within 50 units of our goal, if so - pick a new patrol point
-		if (DistanceToGoal < 50) {
+		if (DistanceToGoal < 100) {
 			MoveToNextPatrolPoint();
 		}
 	}
@@ -146,8 +146,8 @@ void AFPSAIGuard::MoveToNextPatrolPoint()
 		CurrentPatrolPoint = SecondPatrolPoint;
 	}
 
-	UNavigationSystemV1::SimpleMoveToActor(GetController(), CurrentPatrolPoint);
-	//UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), CurrentPatrolPoint);
+	//UNavigationSystemV1::SimpleMoveToActor(GetController(), CurrentPatrolPoint);
+	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), CurrentPatrolPoint);
 }
 
 void AFPSAIGuard::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const

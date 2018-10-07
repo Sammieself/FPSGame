@@ -61,8 +61,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	// CHALLENGE CODE	
-
 	/* Let the guard go on patrol */
 	UPROPERTY(EditInstanceOnly, Category = "AI")
 	bool bPatrol;
