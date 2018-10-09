@@ -24,7 +24,6 @@ ALaunchPad::ALaunchPad()
 	LaunchPitchAngle = 35.0f;
 }
 
-
 void ALaunchPad::OverlapLaunchPad(
 	UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor,
@@ -42,18 +41,13 @@ void ALaunchPad::OverlapLaunchPad(
 	ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor);
 	if (OtherCharacter)	{
 		// Launch Player! Both booleans give consistent launch velocity by ignoring the current player velocity
-		OtherCharacter->LaunchCharacter(LaunchVelocity, true, true);
-
-		// Spawn FX
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ActivateLaunchPadEffect, GetActorLocation());
-		UGameplayStatics::PlaySound2D(this, LaunchpadSound);
+		OtherCharacter->LaunchCharacter(LaunchVelocity, true, true);	
 	}
 	// Did not overlap a player, so check if it's a physics simulating actor we can launch
 	else if (OtherComp && OtherComp->IsSimulatingPhysics())	{
 		OtherComp->AddImpulse(LaunchVelocity, NAME_None, true);
-
-		// Spawn FX
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ActivateLaunchPadEffect, GetActorLocation());
-		UGameplayStatics::PlaySound2D(this, LaunchpadSound);
 	}
+	// Spawn FX
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ActivateLaunchPadEffect, GetActorLocation());
+	UGameplayStatics::PlaySoundAtLocation(this, LaunchpadSound, GetActorLocation());
 }

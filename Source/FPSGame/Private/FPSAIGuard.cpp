@@ -8,7 +8,6 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "TimerManager.h"
 
-
 // Sets default values
 AFPSAIGuard::AFPSAIGuard()
 {
@@ -150,7 +149,7 @@ void AFPSAIGuard::MoveToNextPatrolPoint()
 	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), CurrentPatrolPoint);
 }
 
-void AFPSAIGuard::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
+void AFPSAIGuard::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> & OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 

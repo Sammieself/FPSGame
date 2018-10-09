@@ -14,7 +14,8 @@ public class FPSGame : ModuleRules
             "Engine",
             "InputCore",
             "NavigationSystem",
-            "AIModule"
+            "AIModule",
+            "Networking"
         });
 	}
 }
